@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+
+<config>
+    <sections>
+        <converdo translate="label" module="analytics">
+            <label>Converdo Analytics</label>
+            <tab>sales</tab>
+            <class>converdo-analytics-tab</class>
+            <frontend_type>text</frontend_type>
+            <sort_order>350</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <analytics translate="label">
+                    <label>Converdo Analytics</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>0</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <expanded>1</expanded>
+                    <fields>
+                        <active translate="label">
+                            <label>Enable</label>
+                            <comment>Only when enabled visitor data is tracked</comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </active>
+
+                        <site translate="label">
+                            <label>Website Token</label>
+                            <comment>Find the website token in the dashboard</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </site>
+
+                        <token translate="label">
+                            <label>Account Token</label>
+                            <comment>Find the account token in the dashboard</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </token>
+
+                        <encryption translate="label">
+                            <label>Encryption Token</label>
+                            <comment>Find the encryption token in the dashboard</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </encryption>
+
+                    </fields>
+                </analytics>
+            </groups>
+        </converdo>
+    </sections>
+</config>

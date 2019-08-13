@@ -1,4 +1,4 @@
-<?php if (Mage::helper('analytics')->isEnabled()) { ?>
+<?php if (cvd_config()->platform()->enabled()) { ?>
 
 <!-- START CONVERDO TRACKING CODE -->
 <script type="text/javascript">
@@ -6,11 +6,14 @@
     (function(){
         <?php $this->trackers(); ?>
 
-        var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0]; g.type='text/javascript'; g.defer=true; g.async=true; g.src='<?= Mage::helper('analytics')->getJsTracker(true); ?>';
+
+        var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0]; g.type='text/javascript'; g.defer=true; g.async=true; g.src='<?= cvd_config()->url('tracker.js'); ?>';
         s.parentNode.insertBefore(g,s);
     })();
 </script>
-<noscript><p><img src="<?= Mage::helper('analytics')->getPhpTracker(true) ?>?idsite=<?= Mage::helper('analytics')->getSiteId() ?>" style="border:0" alt="" /></p></noscript>
+<noscript><p><img src="<?= cvd_config()->url('tracker.php'); ?>?idsite=<?= cvd_config()->platform()->website(); ?>" style="border:0" alt="" /></p></noscript>
 <!-- END CONVERDO TRACKING CODE -->
 
+<?php $this->debugbar(); ?>
+    
 <?php } ?>

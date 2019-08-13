@@ -2,12 +2,12 @@
 
 <config>
     <modules>
-        <Converdo_Analytics>
+        <Converdo_Magento>
             <active>true</active>
             <codePool>community</codePool>
             <depends>
                 <Mage_Core/>
             </depends>
-        </Converdo_Analytics>
+        </Converdo_Magento>
     </modules>
 </config>
