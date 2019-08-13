@@ -27,7 +27,7 @@ class Converdo_Tracker_Query_EcommerceCartUpdate extends Converdo_Tracker_Query_
     public function parameters()
     {
         return [
-            0   => [Converdo_Support_QueryType::float(), number_format($this->entities[0]->getQuote()->getGrandTotal(), 2)],
+            0 => [Converdo_Support_QueryType::float(), number_format($this->entities[0]->getQuote()->getGrandTotal(), 2, ',', '.')],
         ];
     }
 }

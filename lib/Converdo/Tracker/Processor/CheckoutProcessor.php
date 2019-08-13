@@ -50,15 +50,13 @@ class Converdo_Tracker_Processor_CheckoutProcessor extends Converdo_Tracker_Proc
                 ]);
             }
 
-            foreach ($collection as $finalOrder) {
-                Converdo_Support_QueryParser::add(new Converdo_Tracker_Query_EcommerceTracking, [
-                    0 => [Converdo_Support_QueryType::integer(), $finalOrder->getIncrementId()],
-                    1 => [Converdo_Support_QueryType::float(), $finalOrder->getBaseGrandTotal()],
-                    2 => [Converdo_Support_QueryType::float(), number_format($finalOrder->getGrandTotal() - $finalOrder->getShippingAmount() - $finalOrder->getShippingTaxAmount(), 2)],
-                    3 => [Converdo_Support_QueryType::float(), $finalOrder->getBaseTaxAmount()],
-                    4 => [Converdo_Support_QueryType::float(), $finalOrder->getBaseShippingAmount()],
-                ]);
-            }
+            Converdo_Support_QueryParser::add(new Converdo_Tracker_Query_EcommerceTracking, [
+                0 => [Converdo_Support_QueryType::integer(), $order->getIncrementId()],
+                1 => [Converdo_Support_QueryType::float(), $order->getBaseGrandTotal()],
+                2 => [Converdo_Support_QueryType::float(), number_format($order->getGrandTotal() - $order->getShippingAmount() - $order->getShippingTaxAmount(), 2)],
+                3 => [Converdo_Support_QueryType::float(), $order->getBaseTaxAmount()],
+                4 => [Converdo_Support_QueryType::float(), $order->getBaseShippingAmount()],
+            ]);
         }
     }
 }
