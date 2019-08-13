@@ -12,7 +12,7 @@ class Converdo_Analytics_Trackers_SearchView extends Converdo_Analytics_Support_
      */
     public function responsible()
     {
-        return Mage::app()->getFrontController()->getRequest()->getRouteName() == 'catalogsearch';
+        return Mage::helper('analytics')->isSearchPage();
     }
 
     /**

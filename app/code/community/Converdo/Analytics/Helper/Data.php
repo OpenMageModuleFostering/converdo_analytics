@@ -39,7 +39,7 @@ class Converdo_Analytics_Helper_Data extends Mage_Core_Helper_Abstract
 
     public static function getSiteUrl()
     {
-        return '//tracker.converdo.com/';
+        return 'https://tracker.converdo.com/';
     }
 
     public static function getPhpTracker($full = false)
@@ -60,15 +60,46 @@ class Converdo_Analytics_Helper_Data extends Mage_Core_Helper_Abstract
         return 'tracker.js';
     }
 
+    /**
+     * Gets whether the current page is a 'search' page.
+     *
+     * @return bool
+     */
     public function isSearchPage()
     {
-        return isset(Converdo_Analytics_Tracker::attributes()['pt2'])
-            && Converdo_Analytics_Tracker::attributes()['pt2'] === 'search_results';
+        return Mage::app()->getFrontController()->getRequest()->getControllerName() === 'result';
     }
 
+    /**
+     * Gets whether the current page is a 'order success' page.
+     *
+     * @return bool
+     */
     public function isSuccessPage()
     {
         return isset(Converdo_Analytics_Tracker::attributes()['pt2'])
             && Converdo_Analytics_Tracker::attributes()['pt2'] === 'success_index';
+    }
+
+    /**
+     * Gets whether the current page is a 'category' page.
+     *
+     * @return bool
+     */
+    public function isCategoryPage()
+    {
+        return Mage::app()->getFrontController()->getRequest()->getControllerName() === 'category'
+            && Mage::registry('current_category');
+    }
+
+    /**
+     * Gets whether the current page is a 'product' page.
+     *
+     * @return bool
+     */
+    public function isProductPage()
+    {
+        return Mage::app()->getFrontController()->getRequest()->getControllerName() === 'product'
+            && Mage::registry('current_product');
     }
 }

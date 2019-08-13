@@ -1,44 +1,73 @@
 <?php
-/**
- *
- * Piwik Extension for Magento created by Adrian Speyer
- * Get Piwik at http://www.piwik.org - Open source web analytics
- *
- * @category    PiwikMage
- * @package     PiwikMage_PiwikAnalytics
- * @copyright   Copyright (c) 2012 Adrian Speyer. (http://www.adrianspeyer.com)
- * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
- *
- */
 
-
-/**
- * Piwik module observer
- *
- * @category   PiwikMage
- * @package    PiwikMage_PiwikAnalytics
- */
 class Converdo_Analytics_Model_Observer
 {
     /**
-     * Add order information into Piwik block to render on checkout success pages
+     * Listens to placed orders. Sends the order to the Converdo Analytics API.
      *
-     * @param Varien_Event_Observer $observer
+     * @param  Varien_Event_Observer        $observer
+     * @throws Exception
      */
-    public function onCheckout(Varien_Event_Observer $observer)
+    public function onOrderPlacedEvent(Varien_Event_Observer $observer)
     {
-        $orderIds = $observer->getEvent()->getOrderIds();
+        try {
+            $order = $this->getOrder($observer);
 
-        if (empty($orderIds) || !is_array($orderIds)) {
-            return;
-        }
+            if (! $this->enabled() || ! $order) {
+                return;
+            }
 
-        $block = Mage::app()->getFrontController()->getAction()->getLayout()->getBlock('converdo_analytics');
+            (new Converdo_Analytics_API_ConverdoAPI())->order()->create(
+                (new Converdo_Analytics_API_Factories_Order())->make($order)
+            );
 
-        if ($block) {
-            $block->setOrderedIds($orderIds);
+            Converdo_Analytics_Cookie_Manager::logEcommerce();
+        } catch (Exception $e) {
+            Converdo_Analytics_Model_Logger::info($e->getMessage());
         }
     }
+
+    /**
+     * Listens to changed orders. Sends the new order status to the Converdo Analytics API.
+     *
+     * @param  Varien_Event_Observer        $observer
+     * @throws Exception
+     */
+    public function onOrderStatusChangedEvent(Varien_Event_Observer $observer)
+    {
+        try {
+            $order = $this->getOrder($observer);
+
+            if (! $this->enabled() || ! $order) {
+                return;
+            }
+
+            (new Converdo_Analytics_API_ConverdoAPI())->order()->modifyStatus(
+                (new Converdo_Analytics_API_Factories_Order())->make($order)
+            );
+        } catch (Exception $e) {
+            Converdo_Analytics_Model_Logger::info($e->getMessage());
+        }
+    }
+
+    /**
+     * Checks whether the Converdo Analytics plugin is enabled.
+     *
+     * @return bool
+     */
+    protected function enabled()
+    {
+        return Mage::helper('analytics')->isEnabled();
+    }
+
+    /**
+     * Retrieves the Magento order from the event.
+     *
+     * @param  Varien_Event_Observer        $observer
+     * @return Mage_Sales_Model_Order
+     */
+    protected function getOrder(Varien_Event_Observer $observer)
+    {
+        return $observer->getEvent()->getOrder();
+    }
 }
-   
-   

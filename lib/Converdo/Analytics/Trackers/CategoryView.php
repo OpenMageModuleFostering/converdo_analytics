@@ -12,9 +12,7 @@ class Converdo_Analytics_Trackers_CategoryView extends Converdo_Analytics_Suppor
      */
     public function responsible()
     {
-        return Mage::registry('current_category')
-            && Mage::registry('current_category') instanceof Mage_Catalog_Model_Category
-            && ! Mage::registry('current_product');
+        return Mage::helper('analytics')->isCategoryPage();
     }
 
     /**

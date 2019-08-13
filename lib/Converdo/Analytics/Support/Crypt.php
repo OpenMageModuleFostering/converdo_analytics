@@ -3,29 +3,29 @@
 class Converdo_Analytics_Support_Crypt
 {
     /**
-     * Encrypt a given input.
+     * Encrypts a given input.
      *
-     * @param $input
+     * @param  string       $input
      * @return string
      */
     public static function encrypt($input)
     {
-        return openssl_encrypt(base64_encode($input), 'AES-256-CFB', self::key());
+        return @openssl_encrypt(base64_encode($input), 'AES-256-CFB', self::key());
     }
 
     /**
-     * Decrypt a given input.
+     * Decrypts a given input.
      *
-     * @param $input
+     * @param  string       $input
      * @return string
      */
     public static function decrypt($input)
     {
-        return base64_decode(openssl_decrypt($input, 'AES-256-CFB', self::key()));
+        return @base64_decode(openssl_decrypt($input, 'AES-256-CFB', self::key()));
     }
 
     /**
-     * Return the encryption key.
+     * Returns the encryption key.
      *
      * @return string
      */

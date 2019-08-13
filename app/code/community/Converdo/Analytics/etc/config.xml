@@ -3,7 +3,7 @@
 <config>
     <modules>
         <Converdo_Analytics>
-            <version>2.0.0.0</version>
+            <version>2.1.0.0</version>
         </Converdo_Analytics>
     </modules>
     <global>
@@ -34,22 +34,24 @@
             </modules>
         </translate>
         <events>
-            <checkout_onepage_controller_success_action>
+            <sales_order_place_after>
                 <observers>
-                    <analytics_order_success>
+                    <analytics_order_placed>
+                        <type>model</type>
                         <class>analytics/observer</class>
-                        <method>onCheckout</method>
-                    </analytics_order_success>
+                        <method>onOrderPlacedEvent</method>
+                    </analytics_order_placed>
                 </observers>
-            </checkout_onepage_controller_success_action>
-            <checkout_multishipping_controller_success_action>
+            </sales_order_place_after>
+            <sales_order_save_after>
                 <observers>
-                    <analytics_order_success>
+                    <analytics_order_saved>
+                        <type>model</type>
                         <class>analytics/observer</class>
-                        <method>onCheckout</method>
-                    </analytics_order_success>
+                        <method>onOrderStatusChangedEvent</method>
+                    </analytics_order_saved>
                 </observers>
-            </checkout_multishipping_controller_success_action>
+            </sales_order_save_after>
         </events>
         <layout>
             <updates>
@@ -78,6 +80,17 @@
                 </Converdo_Analytics>
             </modules>
         </translate>
+        <events>
+            <sales_order_save_after>
+                <observers>
+                    <analytics_order_saved>
+                        <type>model</type>
+                        <class>analytics/observer</class>
+                        <method>onOrderStatusChangedEvent</method>
+                    </analytics_order_saved>
+                </observers>
+            </sales_order_save_after>
+        </events>
         <layout>
             <updates>
                 <namespace_module>

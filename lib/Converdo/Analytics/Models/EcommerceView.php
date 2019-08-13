@@ -51,7 +51,17 @@ class Converdo_Analytics_Models_EcommerceView
     protected $stockQuantity;
 
     /**
-     * Sets the Product ID.
+     * @var string
+     */
+    protected $manufacturer;
+
+    /**
+     * @var float
+     */
+    protected $cost;
+
+    /**
+     * Sets the product id.
      *
      * @param  int      $id
      * @return $this
@@ -64,7 +74,7 @@ class Converdo_Analytics_Models_EcommerceView
     }
 
     /**
-     * Gets the Product ID.
+     * Gets the product id.
      *
      * @return int
      */
@@ -74,7 +84,7 @@ class Converdo_Analytics_Models_EcommerceView
     }
 
     /**
-     * Sets the Product Sku.
+     * Sets the product sku.
      *
      * @param  string       $sku
      * @return $this
@@ -87,7 +97,7 @@ class Converdo_Analytics_Models_EcommerceView
     }
 
     /**
-     * Gets the Product Sku.
+     * Gets the product sku.
      *
      * @return string
      */
@@ -97,7 +107,7 @@ class Converdo_Analytics_Models_EcommerceView
     }
 
     /**
-     * Sets the Product Name.
+     * Sets the product name.
      *
      * @param  string       $name
      * @return $this
@@ -110,7 +120,7 @@ class Converdo_Analytics_Models_EcommerceView
     }
 
     /**
-     * Gets the Product Name.
+     * Gets the product name.
      *
      * @return string
      */
@@ -120,7 +130,7 @@ class Converdo_Analytics_Models_EcommerceView
     }
 
     /**
-     * Sets the Product Categories (up to five).
+     * Sets the product categories (up to five).
      *
      * @param  array    $categories
      * @return          $this
@@ -132,15 +142,16 @@ class Converdo_Analytics_Models_EcommerceView
             $this->categories[] = addslashes($category->getName());
         }
 
-        $this->categories = array_splice(array_filter($this->categories), 0, 5);
+        $this->categories = array_filter($this->categories);
+        $this->categories = array_splice($this->categories, 0, 5);
 
         return $this;
     }
 
     /**
-     * Gets the Product Categories.
+     * Gets the product categories.
      *
-     * @return null|string
+     * @return string
      */
     public function getCategories()
     {
@@ -148,7 +159,7 @@ class Converdo_Analytics_Models_EcommerceView
     }
 
     /**
-     * Sets the Product Price.
+     * Sets the product price.
      *
      * @param  float        $price
      * @return $this
@@ -161,7 +172,7 @@ class Converdo_Analytics_Models_EcommerceView
     }
 
     /**
-     * Gets the Product Price.
+     * Gets the product price.
      *
      * @return float|null
      */
@@ -171,7 +182,7 @@ class Converdo_Analytics_Models_EcommerceView
     }
 
     /**
-     * Sets the Product Image URL.
+     * Sets the product image url.
      *
      * @param  string       $imageUrl
      * @return $this
@@ -184,7 +195,7 @@ class Converdo_Analytics_Models_EcommerceView
     }
 
     /**
-     * Gets the Product Image URL.
+     * Gets the product image url.
      *
      * @return string
      */
@@ -194,9 +205,9 @@ class Converdo_Analytics_Models_EcommerceView
     }
 
     /**
-     * Sets the Product Type.
+     * Sets the product type.
      *
-     * @param  int      $type
+     * @param  int          $type
      * @return $this
      */
     public function setType($type)
@@ -207,7 +218,7 @@ class Converdo_Analytics_Models_EcommerceView
     }
 
     /**
-     * Gets the Product Type.
+     * Gets the product type.
      *
      * @return int
      */
@@ -217,9 +228,9 @@ class Converdo_Analytics_Models_EcommerceView
     }
 
     /**
-     * Sets the Product Stock.
+     * Sets the product stock.
      *
-     * @param  bool     $isInStock
+     * @param  bool         $isInStock
      * @return $this
      */
     public function setIsInStock($isInStock)
@@ -230,7 +241,7 @@ class Converdo_Analytics_Models_EcommerceView
     }
 
     /**
-     * Gets the Product Stock.
+     * Gets the product stock.
      *
      * @return bool
      */
@@ -240,9 +251,9 @@ class Converdo_Analytics_Models_EcommerceView
     }
 
     /**
-     * Sets the Product Stock Quantity.
+     * Sets the product stock quantity.
      *
-     * @param  int      $quantity
+     * @param  int          $quantity
      * @return $this
      */
     public function setStockQuantity($quantity)
@@ -253,13 +264,59 @@ class Converdo_Analytics_Models_EcommerceView
     }
 
     /**
-     * Gets the Product Stock Quantity.
+     * Gets the product stock quantity.
      *
      * @return bool
      */
     public function getStockQuantity()
     {
         return (float) $this->stockQuantity;
+    }
+
+    /**
+     * Sets the manufacturer.
+     *
+     * @param  string       $manufacturer
+     * @return $this
+     */
+    public function setManufacturer($manufacturer)
+    {
+        $this->manufacturer = $manufacturer;
+
+        return $this;
+    }
+
+    /**
+     * Gets the manufacturer.
+     *
+     * @return string
+     */
+    public function getManufacturer()
+    {
+        return (string) $this->manufacturer;
+    }
+
+    /**
+     * Sets the product cost.
+     *
+     * @param  float        $cost
+     * @return $this
+     */
+    public function setCost($cost)
+    {
+        $this->cost = $cost;
+
+        return $this;
+    }
+
+    /**
+     * Gets the Product cost.
+     *
+     * @return float
+     */
+    public function getCost()
+    {
+        return (float) $this->cost;
     }
 
     /**
@@ -275,7 +332,7 @@ class Converdo_Analytics_Models_EcommerceView
 
         $children = Mage::getModel('catalog/product_type_configurable')->getChildrenIds($this->getId());
 
-        if (count($children) < 0) {
+        if (count($children) <= 0) {
             return [];
         }
 
@@ -319,8 +376,11 @@ class Converdo_Analytics_Models_EcommerceView
             // Product Is In Stock
             'stb'       => $this->getIsInStock(),
 
-            // Product Is In Stock
-            'bra'       => null,
+            // Product Brand
+            'bra'       => $this->getManufacturer(),
+
+            // Product Cost
+            'cos'       => $this->getCost(),
 
             // Product Stock Quantity
             'sqn'       => $this->getStockQuantity(),

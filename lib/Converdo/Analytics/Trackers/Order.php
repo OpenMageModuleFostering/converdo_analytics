@@ -14,6 +14,7 @@ class Converdo_Analytics_Trackers_Order extends Converdo_Analytics_Support_Abstr
      */
     public function responsible()
     {
+        return false;
         return Mage::helper('analytics')->isSuccessPage();
     }
 

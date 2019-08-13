@@ -39,7 +39,7 @@ class Converdo_Analytics_Trackers_Cart extends Converdo_Analytics_Support_Abstra
                 ->setSku($product->getSku())
                 ->setName($product->getName())
                 ->setCategory($category)
-                ->setPrice($product->getFinalPrice())
+                ->setPrice($cartItem->getPrice())
                 ->setQuantity($cartItem->getQty());
         }
 

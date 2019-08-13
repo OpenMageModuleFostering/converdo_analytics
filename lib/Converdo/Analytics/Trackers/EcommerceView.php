@@ -12,9 +12,7 @@ class Converdo_Analytics_Trackers_EcommerceView extends Converdo_Analytics_Suppo
      */
     public function responsible()
     {
-        return Mage::registry('current_product')
-            && Mage::registry('current_product') instanceof Mage_Catalog_Model_Product
-            && Mage::app()->getFrontController()->getRequest()->getRouteName() !== 'catalogsearch';
+        return Mage::helper('analytics')->isProductPage();
     }
 
     /**
@@ -34,6 +32,8 @@ class Converdo_Analytics_Trackers_EcommerceView extends Converdo_Analytics_Suppo
             ->setType(Mage::registry('current_product')->getTypeID())
             ->setIsInStock(Mage::registry('current_product')->getStockItem()->getIsInStock())
             ->setStockQuantity(Mage::registry('current_product')->getStockItem()->getQty())
+            ->setManufacturer(Mage::registry('current_product')->getData('manufacturer'))
+            ->setCost(Mage::registry('current_product')->getData('cost'))
         ;
     }
 
