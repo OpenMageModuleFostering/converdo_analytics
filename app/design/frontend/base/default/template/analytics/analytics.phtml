@@ -1,16 +1,16 @@
-        <?php if (Mage::helper('analytics')->isEnabled()) { ?>
+<?php if (Mage::helper('analytics')->isEnabled()) { ?>
 
-		<!-- START CONVERDO TRACKING CODE -->
-        <script type="text/javascript">
-            var _paq = _paq || [];
-            (function(){
-                <?php $this->trackers(); ?>
+<!-- START CONVERDO TRACKING CODE -->
+<script type="text/javascript">
+    var _paq = _paq || [];
+    (function(){
+        <?php $this->trackers(); ?>
 
-                var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0]; g.type='text/javascript'; g.defer=true; g.async=true; g.src='<?= Mage::helper('analytics')->getJsTracker(true); ?>';
-                s.parentNode.insertBefore(g,s);
-            })();
-        </script>
-        <noscript><p><img src="<?= Mage::helper('analytics')->getPhpTracker(true) ?>?idsite=<?= Mage::helper('analytics')->getSiteId() ?>" style="border:0" alt="" /></p></noscript>
-        <!-- END CONVERDO TRACKING CODE -->
+        var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0]; g.type='text/javascript'; g.defer=true; g.async=true; g.src='<?= Mage::helper('analytics')->getJsTracker(true); ?>';
+        s.parentNode.insertBefore(g,s);
+    })();
+</script>
+<noscript><p><img src="<?= Mage::helper('analytics')->getPhpTracker(true) ?>?idsite=<?= Mage::helper('analytics')->getSiteId() ?>" style="border:0" alt="" /></p></noscript>
+<!-- END CONVERDO TRACKING CODE -->
 
-		<?php } ?>
+<?php } ?>

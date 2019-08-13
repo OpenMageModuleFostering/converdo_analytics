@@ -59,4 +59,16 @@ class Converdo_Analytics_Helper_Data extends Mage_Core_Helper_Abstract
 
         return 'tracker.js';
     }
+
+    public function isSearchPage()
+    {
+        return isset(Converdo_Analytics_Tracker::attributes()['pt2'])
+            && Converdo_Analytics_Tracker::attributes()['pt2'] === 'search_results';
+    }
+
+    public function isSuccessPage()
+    {
+        return isset(Converdo_Analytics_Tracker::attributes()['pt2'])
+            && Converdo_Analytics_Tracker::attributes()['pt2'] === 'success_index';
+    }
 }

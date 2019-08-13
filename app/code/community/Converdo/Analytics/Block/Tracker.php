@@ -8,92 +8,38 @@ class Converdo_Analytics_Block_Tracker extends Mage_Core_Block_Template
     protected $orderedIds = [];
 
     /**
-     * @var array
-     */
-    public $configuration = [];
-
-    /**
      * Render Converdo tracking scripts
      *
      * @return string
      */
     protected function trackers()
     {
-        if (!Mage::helper('analytics')->isEnabled()) {
+        if (! Mage::helper('analytics')->isEnabled()) {
             return null;
         }
 
-        foreach (Mage::getModel('checkout/cart')->getQuote()->getAllVisibleItems() as $productId) {
-            $this->addOrderedId($productId->getProductId());
-        }
+        $trackers = [
+            new Converdo_Analytics_Trackers_Configuration(),
+            new Converdo_Analytics_Trackers_PageView(),
+            new Converdo_Analytics_Trackers_SearchView(),
+            new Converdo_Analytics_Trackers_EcommerceView(),
+            new Converdo_Analytics_Trackers_CategoryView(),
+            new Converdo_Analytics_Trackers_Cart(),
+            new Converdo_Analytics_Trackers_Order(),
+            new Converdo_Analytics_Trackers_Options(),
+        ];
 
-        $processors[] = new Converdo_Tracker_Processor_HeadProcessor;
-        $processors[] = new Converdo_Tracker_Processor_CartProcessor;
-        $processors[] = new Converdo_Tracker_Processor_CheckoutProcessor;
-        $processors[] = new Converdo_Tracker_Processor_ProductViewProcessor;
-        $processors[] = new Converdo_Tracker_Processor_CustomUrlProcessor;
-        $processors[] = new Converdo_Tracker_Processor_CategoryViewProcessor;
-        $processors[] = new Converdo_Tracker_Processor_PageViewProcessor;
-        $processors[] = new Converdo_Tracker_Processor_FootProcessor;
-
-        foreach ($processors as $key => $processor) {
-            if (!($processor->responsible($this))) {
+        foreach ($trackers as $tracker) {
+            if (! $tracker->responsible()) {
                 continue;
             }
 
-            $processor->process($this);
-            
-            if ($processor->hasConfiguration()) {
-                $this->configuration = array_merge($this->configuration, $processor->getConfiguration());
-            }
+            $tracker->track();
 
-            if ($key === count($processors) - 2) {
-                $customVariables = new Converdo_Tracker_Processor_CustomVariableProcessor;
-                $customVariables->responsible($this);
-                $customVariables->process();
-            }
+            Converdo_Analytics_Tracker::attributes($tracker->attributes());
+            Converdo_Analytics_Tracker::query($tracker->toArray());
         }
-        
-        echo Converdo_Support_QueryParser::parse();
-    }
 
-    /**
-     * Set the ordered ids.
-     *
-     * @param array $orderedIds
-     */
-    public function setOrderedIds(array $orderedIds = [])
-    {
-        $this->orderedIds = $orderedIds;
-    }
-
-    /**
-     * Add an order id.
-     *
-     * @param array $id
-     */
-    public function addOrderedId($id)
-    {
-        $this->orderedIds[] = $id;
-    }
-
-    /**
-     * Get the ordered ids.
-     *
-     * @return array
-     */
-    public function getOrderedIds()
-    {
-        return (array) $this->orderedIds;
-    }
-
-    /**
-     * Get whether the ordered ids are set.
-     *
-     * @return bool
-     */
-    public function hasOrderedIds()
-    {
-        return (bool) is_array($this->orderedIds) && count($this->orderedIds);
+        echo implode("\r\n\t\t\t\t", Converdo_Analytics_Tracker::query());
     }
 }

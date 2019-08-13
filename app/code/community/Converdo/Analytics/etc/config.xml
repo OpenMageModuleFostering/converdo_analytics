@@ -3,7 +3,7 @@
 <config>
     <modules>
         <Converdo_Analytics>
-            <version>1.2.5.0</version>
+            <version>2.0.0.0</version>
         </Converdo_Analytics>
     </modules>
     <global>
