@@ -1,6 +1,6 @@
 <?php
 
-namespace Converdo\Common\Support;
+namespace Converdo\Magento\Support;
 
 use Mage_Sales_Model_Order;
 use Varien_Event_Observer;

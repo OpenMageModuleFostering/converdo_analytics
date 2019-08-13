@@ -10,7 +10,7 @@
                             <config>
                                 <children>
                                     <converdo translate="title" module="analytics">
-                                        <title>Converdo Analytics</title>
+                                        <title>Converdo Conversion Monitor</title>
                                     </converdo>
                                 </children>
                             </config>

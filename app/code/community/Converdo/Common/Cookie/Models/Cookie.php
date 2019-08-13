@@ -29,6 +29,11 @@ class Cookie implements CookieInterface
     /**
      * @var int
      */
+    protected $lastEcommerceOrderCreatedAt;
+
+    /**
+     * @var int
+     */
     protected $createdAt;
 
     /**
@@ -103,6 +108,24 @@ class Cookie implements CookieInterface
     /**
      * @inheritDoc
      */
+    public function setLastEcommerceOrderCreatedAt($lastCreatedAt)
+    {
+        $this->lastEcommerceOrderCreatedAt = $lastCreatedAt;
+
+        return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getLastEcommerceOrderCreatedAt()
+    {
+        return (int) $this->lastEcommerceOrderCreatedAt;
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function getLastVisitedAt()
     {
         return (int) $this->lastVisitedAt;
@@ -149,13 +172,19 @@ class Cookie implements CookieInterface
      */
     public function __toString()
     {
-        return implode('.', [
+        $values = [
             $this->getVisitor(),
             $this->getUuid(),
             $this->getCreatedAt(),
             $this->getVisitCount(),
             $this->getUpdatedAt(),
             $this->getLastVisitedAt()
-        ]);
+        ];
+
+        $values = implode('.', $values);
+
+        $values = trim($values, '.');
+
+        return $values;
     }
 }

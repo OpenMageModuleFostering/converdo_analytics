@@ -69,6 +69,11 @@ class Converdo_Magento_Block_Tracker extends Mage_Core_Block_Template
             return;
         }
 
-        dump(array_values(QueryManager::parsed()));
+		if (! function_exists('dump')) {
+			echo '<pre>', print_r(array_values(QueryManager::parsed()));
+		} else {
+			dump(array_values(QueryManager::parsed()));
+		}
+        
     }
 }

@@ -65,6 +65,21 @@ interface CookieInterface
     public function getLastVisitedAt();
 
     /**
+     * Sets the last ecommerce created timestamp.
+     *
+     * @param  int          $lastCreatedAt
+     * @return $this
+     */
+    public function setLastEcommerceOrderCreatedAt($lastCreatedAt);
+
+    /**
+     * Gets the last ecommerce created timestamp.
+     *
+     * @return int
+     */
+    public function getLastEcommerceOrderCreatedAt();
+
+    /**
      * Sets the created at timestamp.
      *
      * @param  int          $createdAt

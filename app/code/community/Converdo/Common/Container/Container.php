@@ -32,10 +32,18 @@ class Container
      */
     public static function make($string)
     {
-        if (! isset(self::$instances[$string])) {
-            self::$instances[$string] = new $string;
+        // Return already instantiated instance.
+        if (isset(self::$instances[$string])) {
+            return self::$instances[$string];
         }
 
+        // Return new instance from an interface.
+        if (isset(self::$bindings[$string])) {
+            self::$instances[$string] = new self::$bindings[$string];
+        } else {
+            self::$instances[$string] = new $string;
+        }
+        
         return self::$instances[$string];
     }
 

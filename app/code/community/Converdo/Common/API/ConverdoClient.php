@@ -51,7 +51,7 @@ class ConverdoClient
      * @param  array    $parameters
      * @return $this
      */
-    public function setParameters($parameters)
+    public function setParameters(array $parameters = [])
     {
         $this->parameters = $parameters + $this->defaultParameters();
 
@@ -67,9 +67,7 @@ class ConverdoClient
     {
         $cookie = CookieManager::find();
 
-        return [
-            'visitor' => $cookie->getVisitor(),
-        ];
+        return $cookie ? ['visitor' => $cookie->getVisitor()] : [];
     }
 
     /**
@@ -135,18 +133,31 @@ class ConverdoClient
      * Posts the data to the API.
      *
      * @throws Exception
-     * @return bool
+     * @return string
      */
     public function post()
     {
         return $this->request('POST');
     }
 
+    /**
+     * Gets the data from the API.
+     *
+     * @throws Exception
+     * @return string
+     */
     public function get()
     {
         return $this->request('GET');
     }
 
+    /**
+     * Makes the request to the server.
+     *
+     * @param  string       $method
+     * @return string
+     * @throws Exception
+     */
     public function request($method = 'GET')
     {
         $ch = curl_init($this->buildUrl($method));
@@ -160,7 +171,7 @@ class ConverdoClient
         if ($method === 'POST') {
             curl_setopt($ch, CURLOPT_POSTFIELDS, $this->getParameters());
         }
-
+		
         $response = curl_exec($ch);
 
         if ($response === FALSE) {
@@ -169,6 +180,6 @@ class ConverdoClient
 
         curl_close($ch);
 
-        return trim($response);
+        return trim((string) $response);
     }
 }

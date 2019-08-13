@@ -1,14 +1,13 @@
 <?php
 
-$classmap = [
+return [
+
     '/Common/Support/HasParameters',
     '/Common/Support/Arrayable',
-    '/Common/Support/ListensToOrders',
     '/Common/Input/Input',
     '/Common/Input/InputManager',
     '/Common/Support/UsesInput',
     '/Common/Log/LoggerInterface',
-    '/Common/Log/Logger',
     '/Common/Log/LoggerAwareInterface',
     '/Common/Log/LogReader',
     '/Common/Security/Crypt',
@@ -49,6 +48,7 @@ $classmap = [
     '/Common/Controllers/PingController',
     '/Common/Container/Container',
     '/Common/Config/Contracts/PlatformConfigurationContract',
+    '/Common/Config/AbstractPlatformConfiguration',
     '/Common/Config/Configuration',
     '/Common/API/Models/Contracts/OrderInterface',
     '/Common/API/Models/Order',
@@ -57,19 +57,5 @@ $classmap = [
     '/Common/API/Sections/SetupAPI',
     '/Common/API/ConverdoAPI',
     '/Common/API/Requests',
-    '/Common/API/Factories/OrderFactory',
-    '/Magento/Page/RouteResolver',
-    '/Magento/Config/Configuration',
-    '/Magento/Container/Bindings',
-    '/Magento/Factories/EcommerceCartFactory',
-    '/Magento/Factories/EcommerceCategoryFactory',
-    '/Magento/Factories/EcommerceItemFactory',
-    '/Magento/Factories/EcommerceSearchFactory',
-    '/Magento/Support/PriceHelper',
+    
 ];
-
-foreach ($classmap as $class) {
-    if (realpath(dirname(__DIR__) . $class . '.php')) {
-        require_once dirname(__DIR__) . $class . '.php';
-    }
-}

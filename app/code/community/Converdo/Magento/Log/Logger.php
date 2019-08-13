@@ -1,7 +1,9 @@
 <?php
 
-namespace Converdo\Common\Log;
+namespace Converdo\Magento\Log;
 
+use Converdo\Common\Log\LoggerInterface;
+use Converdo\Common\Log\LogReader;
 use Mage;
 use Zend_Log;
 

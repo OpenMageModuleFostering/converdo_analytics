@@ -4,7 +4,7 @@
     <default>
         <reference name="head">
             <action method="addCss">
-                <name>converdoanalytics/css/system_config_edit.css</name>
+                <name>conversionmonitor/css/system_config_edit.css</name>
             </action>
         </reference>
     </default>

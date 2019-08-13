@@ -18,7 +18,7 @@ class CookieManager
     protected static $cookie = null;
 
     /**
-     * Finds the Converdo Analytics cookie.
+     * Finds the Converdo cookie.
      *
      * @return CookieInterface|null;
      */
@@ -35,6 +35,8 @@ class CookieManager
 
             $values = explode('.', $cookie);
 
+            $values = array_pad($values, 7, '.');
+
             self::$name = str_replace('.pk.id', '_pk_id', str_replace('_', '.', $key));
             self::$cookie = CookieFactory::build($values);
 
@@ -49,6 +51,12 @@ class CookieManager
      */
     public static function logEcommerce()
     {
+		$cookie = self::find();
+		
+		if (! $cookie) {
+			return;			
+		}
+		
         self::$cookie->setLastVisitedAt(time());
         self::$cookie->setUpdatedAt(time());
 

@@ -2,7 +2,8 @@
 
 namespace Converdo\Magento\Config;
 
-use Converdo\Common\Config\Contracts\PlatformConfigurationContract;
+use Converdo\Common\Config\AbstractPlatformConfiguration;
+use Converdo\Common\Page\Support\PageTypes;
 use Converdo\Magento\Container\Bindings;
 use Converdo\Magento\Factories\EcommerceCartFactory;
 use Converdo\Magento\Factories\EcommerceCategoryFactory;
@@ -10,7 +11,7 @@ use Converdo\Magento\Factories\EcommerceItemFactory;
 use Converdo\Magento\Factories\EcommerceSearchFactory;
 use Mage;
 
-class Configuration implements PlatformConfigurationContract
+class Configuration extends AbstractPlatformConfiguration
 {
     /**
      * @var bool
@@ -49,7 +50,7 @@ class Configuration implements PlatformConfigurationContract
      */
     public function version($check = null)
     {
-        $version = Mage::getConfig()->getNode('modules/Converdo_Magento/version')->asArray();
+        $version = cvd_config()->version();
 
         return $check ? $version === $check : $version;
     }
@@ -187,5 +188,25 @@ class Configuration implements PlatformConfigurationContract
     public function bindings()
     {
         return cvd_app(Bindings::class)->toArray('map');
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function directory()
+    {
+        return 'Magento';
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getPageSubType()
+    {
+        if ($this->getRouteName() === 'cms' && $this->getPageType() === 'cms_index_index') {
+            return PageTypes::PAGE_HOMEPAGE;
+        }
+
+        return $this->getRouteName();
     }
 }

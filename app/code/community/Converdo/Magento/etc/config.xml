@@ -3,7 +3,7 @@
 <config>
     <modules>
         <Converdo_Magento>
-            <version>2.1.5.57</version>
+            <version>2.0.0.0</version>
         </Converdo_Magento>
     </modules>
     <global>
@@ -28,7 +28,7 @@
             <modules>
                 <Converdo_Magento>
                     <files>
-                        <default>Converdo_Analytics.csv</default>
+                        <default>Converdo_ConversionMonitor.csv</default>
                     </files>
                 </Converdo_Magento>
             </modules>
@@ -65,7 +65,7 @@
                 <use>standard</use>
                 <args>
                     <module>Converdo_Magento</module>
-                    <frontName>converdoanalytics</frontName>
+                    <frontName>conversionmonitor</frontName>
                 </args>
             </Converdo_Magento>
         </routers>
@@ -75,7 +75,7 @@
             <modules>
                 <Converdo_Magento>
                     <files>
-                        <default>Converdo_Analytics.csv</default>
+                        <default>Converdo_ConversionMonitor.csv</default>
                     </files>
                 </Converdo_Magento>
             </modules>
@@ -94,7 +94,7 @@
         <layout>
             <updates>
                 <namespace_module>
-                    <file>converdoanalytics.xml</file>
+                    <file>conversionmonitor.xml</file>
                 </namespace_module>
             </updates>
         </layout>

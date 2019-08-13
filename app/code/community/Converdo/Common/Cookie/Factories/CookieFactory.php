@@ -19,6 +19,8 @@ class CookieFactory
                     ->setCreatedAt($values[2])
                     ->setVisitCount($values[3])
                     ->setUpdatedAt($values[4])
-                    ->setLastVisitedAt($values[5]);
+                    ->setLastVisitedAt($values[5])
+                    ->setLastEcommerceOrderCreatedAt($values[6])
+            ;
     }
 }

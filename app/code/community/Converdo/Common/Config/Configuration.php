@@ -9,14 +9,14 @@ use Converdo\Common\Security\Crypt;
 class Configuration
 {
     /**
-     * The Converdo Analytics plugin version.
+     * The Converdo plugin version.
      *
      * @var string
      */
-    const VERSION = '2.1.5.57';
+    const VERSION = '2.1.6.50';
 
     /**
-     * The Converdo Analytics URL.
+     * The Converdo URL.
      *
      * @var string
      */
@@ -55,16 +55,9 @@ class Configuration
      */
     public function __construct()
     {
-        if (defined('MAGENTO_ROOT')) {
-            $this->platform = cvd_app(\Converdo\Magento\Config\Configuration::class);
-            $this->basePath = MAGENTO_ROOT;
-            $this->path = realpath($this->basePath . '/app/code/community/Converdo');
-        }
-
-        if (defined('WC_ABSPATH')) {
-            // TODO: WooCommerce
-        }
-
+        $this->platform = cvd_app(\Converdo\Magento\Config\Configuration::class);
+        $this->basePath = dirname(dirname(dirname(dirname(dirname(dirname(__DIR__))))));
+        $this->path = realpath($this->basePath . '/app/code/community/Converdo');
 
         $this->resolveBindings();
 
@@ -133,10 +126,22 @@ class Configuration
         return $this->environment['protocol'];
     }
 
-
+    /**
+     * Resolve all interface bindings.
+     */
     protected function resolveBindings()
     {
         cvd_app()->bindArray($this->platform()->bindings());
+    }
+
+    /**
+     * Whether to show the encrypted configuration string in the tracker as plain text.
+     *
+     * @return bool
+     */
+    public function debugEncryption()
+    {
+        return isset($this->environment['debugEncryption']) ? $this->environment['debugEncryption'] : false;
     }
 
     /**
@@ -146,8 +151,8 @@ class Configuration
      */
     protected function resolveEnvironment()
     {
-        if (file_exists($this->basePath . '/converdoanalytics-environment.php')) {
-            $this->environment = include($this->basePath . '/converdoanalytics-environment.php');
+        if (file_exists($this->basePath . '/converdo-environment.php')) {
+            $this->environment = include($this->basePath . '/converdo-environment.php');
         } else {
             $this->environment = include($this->path . '/Common/config.php');
         }

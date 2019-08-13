@@ -52,6 +52,11 @@ class EcommerceItem implements EcommerceItemInterface
     protected $type;
 
     /**
+     * @var string
+     */
+    protected $attribute;
+
+    /**
      * @var bool
      */
     protected $isInStock;
@@ -247,6 +252,24 @@ class EcommerceItem implements EcommerceItemInterface
     public function getType()
     {
         return $this->type;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setAttributeSet($attribute)
+    {
+        $this->attribute = $attribute;
+
+        return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getAttributeSet()
+    {
+        return $this->attribute;
     }
 
     /**

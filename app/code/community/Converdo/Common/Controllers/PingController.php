@@ -19,9 +19,9 @@ class PingController extends JsonResponse
     {
         $output['plugin'] = $this->version();
 
-        $user = cvd_config()->platform()->user();
+        $encryption = cvd_config()->platform()->encryption();
 
-        if ($this->input()->has('key') && $this->input()->get('key') === $user) {
+        if ($this->input()->get('key') === $encryption) {
             $output['validation'] = $this->validation();
 
             if ($this->input()->has('log')) {

@@ -31,7 +31,7 @@ class EcommerceView extends AbstractQuery
         $this->metadata()->set('rid', $product->getId());
         $this->metadata()->set('tid', $product->getChildrenIds());
         $this->metadata()->set('typ', $product->getType());
-        $this->metadata()->set('att', null);
+        $this->metadata()->set('att', $product->getAttributeSet());
         $this->metadata()->set('stb', $product->getIsInStock());
         $this->metadata()->set('sqn', $product->getStockQuantity());
         $this->metadata()->set('bra', $product->getManufacturer());

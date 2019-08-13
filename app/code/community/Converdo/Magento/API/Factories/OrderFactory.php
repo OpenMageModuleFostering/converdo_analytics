@@ -1,6 +1,6 @@
 <?php
 
-namespace Converdo\Common\API\Factories;
+namespace Converdo\Magento\API\Factories;
 
 use Converdo\Common\API\Models\Contracts\OrderInterface;
 use Converdo\Common\API\Models\Order;

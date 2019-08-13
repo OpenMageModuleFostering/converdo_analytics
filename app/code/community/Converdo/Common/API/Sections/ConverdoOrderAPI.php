@@ -8,7 +8,7 @@ use Converdo\Common\API\Models\Contracts\OrderInterface;
 class ConverdoOrderAPI
 {
     /**
-     * Sends a new order to Converdo Analytics.
+     * Sends a new order to Converdo.
      *
      * @param  OrderInterface   $order
      * @return bool
@@ -38,7 +38,7 @@ class ConverdoOrderAPI
     }
 
     /**
-     * Sends the modified order status of an existing order to Converdo Analytics.
+     * Sends the modified order status of an existing order to Converdo.
      *
      * @param  OrderInterface   $order
      * @return bool

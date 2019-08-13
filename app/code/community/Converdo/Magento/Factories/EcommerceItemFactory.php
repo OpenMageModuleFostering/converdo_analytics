@@ -21,16 +21,17 @@ class EcommerceItemFactory
         return (new EcommerceItem())
                     ->setId($product ? $product->getId() : $original->getId())
                     ->setSKU($product ? $product->getSku() : $original->getSku())
-                    ->setName($product ? $product->getName() : $original->getName())
-                    ->setCategories(self::categories($original->getCategoryIds()))
-                    ->setChildrenIds(self::children($original))
+                    ->setName(addslashes($product ? $product->getName() : $original->getName()))
+                    ->setCategories(static::categories($original->getCategoryIds()))
+                    ->setChildrenIds(static::children($original))
                     ->setPrice($product ? $product->getPrice() : PriceHelper::resolve($original))
                     ->setQuantity($product ? $product->getQty() : 1)
                     ->setImageUrl($original->getImageUrl())
                     ->setType($original->getTypeId())
                     ->setIsInStock($original->getStockItem()->getIsInStock())
                     ->setStockQuantity($original->getStockItem()->getQty())
-                    ->setManufacturer($original->getData('manufacturer'))
+                    ->setManufacturer($original->getAttributeText('manufacturer'))
+                    ->setAttributeSet(static::attribute($original))
                     ->setCost($original->getData('cost'))
             ;
     }
@@ -74,5 +75,31 @@ class EcommerceItemFactory
         }
 
         return array_keys($children[0]);
+    }
+
+    /**
+     * Finds the attribute set name.
+     *
+     * @param  Mage_Catalog_Model_Product       $product
+     * @return string|null
+     */
+    protected static function attribute(Mage_Catalog_Model_Product $product)
+    {
+        $attributeSetModel = Mage::getModel("eav/entity_attribute_set");
+
+        $attributeSetModel->load($product->getAttributeSetId());
+
+        return $attributeSetModel->getData('attribute_set_name');
+    }
+
+    /**
+     * Finds the manufacturer name.
+     *
+     * @param  Mage_Catalog_Model_Product       $product
+     * @return string|null
+     */
+    protected static function manufacturer(Mage_Catalog_Model_Product $product)
+    {
+
     }
 }

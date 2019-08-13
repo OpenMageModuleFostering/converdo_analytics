@@ -154,6 +154,21 @@ interface EcommerceItemInterface
     public function getType();
 
     /**
+     * Sets the product attribute set.
+     *
+     * @param  string       $attribute
+     * @return $this
+     */
+    public function setAttributeSet($attribute);
+
+    /**
+     * Gets the product attribute set.
+     *
+     * @return string
+     */
+    public function getAttributeSet();
+
+    /**
      * Sets whether the product is in stock.
      *
      * @param  bool         $stock

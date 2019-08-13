@@ -5,8 +5,10 @@ $dependencies = [
     'curl',
 ];
 
-foreach ($dependencies as $dependency) {
-    if (! extension_loaded($dependency)) {
-        return false;
+foreach ($dependencies as $key => $dependency) {
+    if (extension_loaded($dependency)) {
+        unset($dependencies[$key]);
     }
 }
+
+return (array) $dependencies;

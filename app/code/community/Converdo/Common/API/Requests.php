@@ -8,7 +8,7 @@ use Converdo\Common\Cookie\Managers\CookieManager;
 class Requests
 {
     /**
-     * Sends the order to Converdo Analytics.
+     * Sends the order to Converdo.
      *
      * @param  OrderInterface       $order
      * @return bool
@@ -25,7 +25,7 @@ class Requests
     }
 
     /**
-     * Sends an updated status to Converdo Analytics.
+     * Sends an updated status to Converdo.
      *
      * @param  OrderInterface       $order
      * @return bool

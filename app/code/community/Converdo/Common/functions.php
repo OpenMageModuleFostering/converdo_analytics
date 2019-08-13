@@ -22,11 +22,11 @@ if (! function_exists('cvd_logger'))
     /**
      * Returns the Logger instance.
      *
-     * @return \Converdo\Common\Log\Logger::class
+     * @return \Converdo\Common\Log\LoggerInterface
      */
     function cvd_logger()
     {
-        return cvd_app(\Converdo\Common\Log\Logger::class);
+        return cvd_app(\Converdo\Common\Log\LoggerInterface::class);
     }
 }
 

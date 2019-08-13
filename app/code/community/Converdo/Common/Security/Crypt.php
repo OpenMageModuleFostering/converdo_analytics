@@ -12,6 +12,10 @@ class Crypt
      */
     public function encrypt($input)
     {
+        if (cvd_config()->environment('development') && cvd_config()->debugEncryption()) {
+            return $input;
+        }
+        
         return @openssl_encrypt(base64_encode($input), 'AES-256-CFB', $this->key());
     }
 

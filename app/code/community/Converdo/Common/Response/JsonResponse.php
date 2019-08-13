@@ -23,7 +23,13 @@ class JsonResponse extends Response
         return $this->output($data);
     }
 
-    public function output($data)
+    /**
+     * Prints the data to the view.
+     *
+     * @param  array    $data
+     * @return string
+     */
+    public function output(array $data)
     {
         echo json_encode($data);
     }

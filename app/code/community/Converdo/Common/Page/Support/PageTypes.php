@@ -66,13 +66,15 @@ class PageTypes
                     continue;
                 }
 
-                return PageFactory::build($key, $page);
+                $keys = cvd_config()->platform()->resolvePageTypes($key, $page);
+
+                return PageFactory::build($keys['pt1'], $keys['pt2']);
             }
         }
 
         return PageFactory::build(
-            cvd_config()->platform()->getRouteName(),
-            cvd_config()->platform()->getActionName()
+            cvd_config()->platform()->getPageType(),
+            cvd_config()->platform()->getPageSubType()
         );
     }
 }

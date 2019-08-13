@@ -1,10 +1,16 @@
 <?xml version="1.0"?>
 
 <config>
+    <tabs>
+        <monitoring translate="label" module="analytics">
+            <label>Monitoring</label>
+            <sort_order>99999</sort_order>
+        </monitoring>
+    </tabs>
     <sections>
         <converdo translate="label" module="analytics">
-            <label>Converdo Analytics</label>
-            <tab>sales</tab>
+            <label>Conversion Monitor</label>
+            <tab>monitoring</tab>
             <class>converdo-analytics-tab</class>
             <frontend_type>text</frontend_type>
             <sort_order>350</sort_order>
@@ -12,8 +18,8 @@
             <show_in_website>1</show_in_website>
             <show_in_store>1</show_in_store>
             <groups>
-                <analytics translate="label">
-                    <label>Converdo Analytics</label>
+                <conversionmonitorsettings translate="label">
+                    <label>Settings</label>
                     <frontend_type>text</frontend_type>
                     <sort_order>0</sort_order>
                     <show_in_default>1</show_in_default>
@@ -31,7 +37,17 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </active>
-
+                    </fields>
+                </conversionmonitorsettings>
+                <conversionmonitortokens translate="label">
+                    <label>API Tokens</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>0</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <expanded>1</expanded>
+                    <fields>
                         <site translate="label">
                             <label>Website Token</label>
                             <comment>Find the website token in the dashboard</comment>
@@ -43,8 +59,8 @@
                         </site>
 
                         <token translate="label">
-                            <label>Account Token</label>
-                            <comment>Find the account token in the dashboard</comment>
+                            <label>User Token</label>
+                            <comment>Find the user token in the dashboard</comment>
                             <frontend_type>text</frontend_type>
                             <sort_order>40</sort_order>
                             <show_in_default>1</show_in_default>
@@ -63,7 +79,7 @@
                         </encryption>
 
                     </fields>
-                </analytics>
+                </conversionmonitortokens>
             </groups>
         </converdo>
     </sections>

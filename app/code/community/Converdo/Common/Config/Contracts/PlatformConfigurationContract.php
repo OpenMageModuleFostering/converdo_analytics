@@ -121,6 +121,29 @@ interface PlatformConfigurationContract
     public function getRouteName();
 
     /**
+     * Returns the page type.
+     *
+     * @return string
+     */
+    public function getPageType();
+
+    /**
+     * Returns the page sub type.
+     *
+     * @return string
+     */
+    public function getPageSubType();
+
+    /**
+     * Resolves the page types after mapping.
+     *
+     * @param  string       $pageType
+     * @param  string       $pageSubType
+     * @return array
+     */
+    public function resolvePageTypes($pageType, $pageSubType);
+
+    /**
      * Returns whether the current page is a search page.
      *
      * @return bool
@@ -147,4 +170,11 @@ interface PlatformConfigurationContract
      * @return array
      */
     public function bindings();
+
+    /**
+     * Returns the directory name the files are located in.
+     *
+     * @return string
+     */
+    public function directory();
 }
