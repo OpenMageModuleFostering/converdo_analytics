@@ -23,10 +23,15 @@ class Converdo_Analytics_Block_Tracker extends Mage_Core_Block_Template
             return null;
         }
 
+        foreach (Mage::getModel('checkout/cart')->getQuote()->getAllVisibleItems() as $productId) {
+            $this->addOrderedId($productId->getProductId());
+        }
+
         $processors[] = new Converdo_Tracker_Processor_HeadProcessor;
         $processors[] = new Converdo_Tracker_Processor_CartProcessor;
         $processors[] = new Converdo_Tracker_Processor_CheckoutProcessor;
         $processors[] = new Converdo_Tracker_Processor_ProductViewProcessor;
+        $processors[] = new Converdo_Tracker_Processor_CustomUrlProcessor;
         $processors[] = new Converdo_Tracker_Processor_CategoryViewProcessor;
         $processors[] = new Converdo_Tracker_Processor_PageViewProcessor;
         $processors[] = new Converdo_Tracker_Processor_FootProcessor;
@@ -48,6 +53,8 @@ class Converdo_Analytics_Block_Tracker extends Mage_Core_Block_Template
                 $customVariables->process();
             }
         }
+        
+        echo Converdo_Support_QueryParser::parse();
     }
 
     /**
@@ -58,6 +65,16 @@ class Converdo_Analytics_Block_Tracker extends Mage_Core_Block_Template
     public function setOrderedIds(array $orderedIds = [])
     {
         $this->orderedIds = $orderedIds;
+    }
+
+    /**
+     * Add an order id.
+     *
+     * @param array $id
+     */
+    public function addOrderedId($id)
+    {
+        $this->orderedIds[] = $id;
     }
 
     /**

@@ -1,23 +1,6 @@
 <?xml version="1.0"?>
 
 <config>
-	    <menu>
-        <report translate="title" module="reports">
-            <title>Reports</title>
-            <sort_order>80</sort_order>
-            <children>                                             
-                <iframe_piwik translate="title" module="reports">
-					<title>Piwik iFrame</title>
-                    <sort_order>99999</sort_order>
-                    <action>analytics/index/index</action>
-                    <depends>
-                        <config>converdo/analytics/active</config>
-                    </depends>
-                </iframe_piwik>
-            </children>
-        </report>
-    </menu>
-
 	<acl>
         <resources>
             <admin>
@@ -29,34 +12,6 @@
                                     <converdo translate="title" module="analytics">
                                         <title>Converdo Analytics</title>
                                     </converdo>
-                                </children>
-                            </config>
-                        </children>
-                    </system>
-                </children>
-            </admin>
-        </resources>
-    </acl>
-	   <acl>
-        <resources>
-            <admin>
-                <children>
-                    <report translate="title" module="reports">
-                        <title>Reports</title>
-                        <sort_order>80</sort_order>
-                        <children>
-                            <iframe_piwik translate="title">
-                                <title>Piwik Iframe</title>
-                            </iframe_piwik>
-                        </children>
-                    </report>
-                    <system>
-                        <children>
-                            <config>
-                                <children>
-                                    <reports translate="title" module="reports">
-                                        <title>Reports</title>
-                                    </reports>
                                 </children>
                             </config>
                         </children>

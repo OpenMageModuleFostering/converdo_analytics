@@ -1,38 +1,21 @@
 <?php
 
+/**
+ * Class Converdo_Tracker_Processor_AbstractProcessor
+ *
+ * @package     Converdo
+ * @author      Marc Roosendaal <marc@converdo.nl>
+ * @copyright   2016 Converdo B.V.
+ */
 abstract class Converdo_Tracker_Processor_AbstractProcessor
 {
-    /**
-     * @var Converdo_Support_Writer
-     */
-    protected $writer;
-
     /**
      * @var array
      */
     protected $configuration = [];
 
     /**
-     * Converdo_Tracker_Processor_AbstractProcessor constructor.
-     */
-    public function __construct()
-    {
-        $this->writer = new Converdo_Support_Writer;
-    }
-
-    /**
-     * Get whether the processor is responsible for the job.
-     *
-     * @param Mage_Core_Block_Template $block
-     * @return bool
-     */
-    public function responsible(Mage_Core_Block_Template $block)
-    {
-        return true;
-    }
-
-    /**
-     * Return an encrypted JSON string with configuration.
+     * Returns an encrypted JSON string with configuration.
      *
      * @return array
      */
@@ -42,9 +25,9 @@ abstract class Converdo_Tracker_Processor_AbstractProcessor
     }
 
     /**
-     * Set the configuration.
+     * Sets the configuration.
      *
-     * @param $configuration
+     * @param  array|string     $configuration
      */
     public function setConfiguration($configuration)
     {
@@ -52,7 +35,21 @@ abstract class Converdo_Tracker_Processor_AbstractProcessor
     }
 
     /**
-     * Get whether the configuration is set.
+     * Gets the configuration.
+     *
+     * @return null|string
+     */
+    public function getConfiguration()
+    {
+        if (! $this->hasConfiguration()) {
+            return null;
+        }
+
+        return (array) $this->configuration;
+    }
+
+    /**
+     * Gets whether the configuration is set and has data.
      *
      * @return bool
      */
@@ -62,22 +59,17 @@ abstract class Converdo_Tracker_Processor_AbstractProcessor
     }
 
     /**
-     * Get the configuration.
-     *
-     * @return null|string
+     * @inheritdoc
+     * @param  Converdo_Analytics_Block_Tracker     $block
+     * @return bool
      */
-    public function getConfiguration()
+    public function responsible(Converdo_Analytics_Block_Tracker $block)
     {
-        if (!($this->hasConfiguration())) {
-            return null;
-        }
-
-        return (array) $this->configuration;
+        return true;
     }
 
     /**
-     * Process everything.
-     *
+     * @inheritdoc
      * @return void
      */
     abstract public function process();

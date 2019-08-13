@@ -1,32 +1,35 @@
 <?php
 
+/**
+ * Class Converdo_Tracker_Query_CategoryView
+ *
+ * @package     Converdo
+ * @author      Marc Roosendaal <marc@converdo.nl>
+ * @copyright   2016 Converdo B.V.
+ * @link        https://developer.piwik.org/api-reference/tracking-javascript
+ * @link        https://piwik.org/docs/ecommerce-analytics/
+ */
 class Converdo_Tracker_Query_CategoryView extends Converdo_Tracker_Query_AbstractQuery
 {
     /**
-     * Get the view.
-     *
-     * @return mixed
+     * @inheritdoc
+     * @return string
      */
-    public function getView()
+    public function view()
     {
         return 'setEcommerceView';
     }
 
     /**
-     * Get the data.
-     *
+     * @inheritdoc
      * @return array
      */
-    public function getData()
+    public function parameters()
     {
-        if (!($this->entity instanceof Mage_Catalog_Model_Category)) {
-            return [];
-        }
-
         return [
-            0   => false,
-            1   => false,
-            2   => $this->entity->getName(),
+            0   => [Converdo_Support_QueryType::null()],
+            1   => [Converdo_Support_QueryType::null()],
+            2   => [Converdo_Support_QueryType::string(), $this->entities[0]->getName()],
         ];
     }
 }

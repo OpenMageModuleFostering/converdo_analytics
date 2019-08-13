@@ -1,39 +1,32 @@
 <?php
 
+/**
+ * Class Converdo_Tracker_Query_TrackerUrl
+ *
+ * @package     Converdo
+ * @author      Marc Roosendaal <marc@converdo.nl>
+ * @copyright   2016 Converdo B.V.
+ * @link        https://developer.piwik.org/api-reference/tracking-javascript
+ */
 class Converdo_Tracker_Query_TrackerUrl extends Converdo_Tracker_Query_AbstractQuery
 {
     /**
-     * @var Converdo_Analytics_Helper_Data
+     * @inheritdoc
+     * @return string
      */
-    protected $helper;
-
-    /**
-     * Converdo_Tracker_Query_TrackerUrl constructor.
-     */
-    public function __construct()
-    {
-        $this->helper = new Converdo_Analytics_Helper_Data;
-    }
-
-    /**
-     * Get the view.
-     *
-     * @return mixed
-     */
-    public function getView()
+    public function view()
     {
         return 'setTrackerUrl';
     }
 
     /**
-     * Get the data.
-     *
+     * @inheritdoc
      * @return array
      */
-    public function getData()
+    public function parameters()
     {
         return [
-            0 => $this->helper->getPhpTracker(true),
+            0   => [Converdo_Support_QueryType::string(), Converdo_Analytics_Helper_Data::getPhpTracker(true)],
         ];
     }
 }

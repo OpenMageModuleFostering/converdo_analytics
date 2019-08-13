@@ -13,28 +13,19 @@ class Converdo_Tracker_Processor_CheckoutProcessor extends Converdo_Tracker_Proc
     protected $trackers;
 
     /**
-     * Converdo_Tracker_Processor_CheckoutProcessor constructor.
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
-     * Get whether the processor is responsible for the job.
-     *
-     * @param Converdo_Analytics_Block_Tracker $block
+     * @inheritdoc
+     * @param  Converdo_Analytics_Block_Tracker     $block
      * @return bool
      */
     public function responsible(Converdo_Analytics_Block_Tracker $block)
     {
         $this->trackers = $block;
-        return (bool) $block->hasOrderedIds();
+
+        return $block->hasOrderedIds();
     }
 
     /**
-     * Process everything.
-     *
+     * @inheritdoc
      * @return void
      */
     public function process()
@@ -44,25 +35,30 @@ class Converdo_Tracker_Processor_CheckoutProcessor extends Converdo_Tracker_Proc
 
         foreach ($collection as $order) {
             foreach ($order->getAllVisibleItems() as $key => $product) {
-                $product    = Mage::getModel('catalog/product')->load($product->product_id);
-                $product    = new Converdo_Entity_Product($product);
-                $category   = null;
+                $product = Mage::getModel('catalog/product')->load($product->product_id);
+                $product = new Converdo_Entity_Product($product);
+                $category = "";
 
                 if (($categoryIds = $product->getCategoryIds()) && count($categoryIds)) {
                     $category = Mage::getModel('catalog/category')->load($categoryIds[0]);
                     $category = $category->getName();
                 }
 
-                $this->writer->make(new Converdo_Tracker_Query_EcommerceItem)->with($product)->with([2 => $category])->write();
+                Converdo_Support_QueryParser::entity($product);
+                Converdo_Support_QueryParser::add(new Converdo_Tracker_Query_EcommerceItem, [
+                    2 => [Converdo_Support_QueryType::string(), $category],
+                ]);
             }
 
-            $this->writer->make(new Converdo_Tracker_Query_EcommerceTracking())->with([
-                0   => $order->getIncrementId(),
-                1   => $order->getBaseGrandTotal(),
-                2   => number_format($order->getGrandTotal() - $order->getShippingAmount() - $order->getShippingTaxAmount(), 2),
-                3   => $order->getBaseTaxAmount(),
-                4   => $order->getBaseShippingAmount()
-            ])->write();
+            foreach ($collection as $finalOrder) {
+                Converdo_Support_QueryParser::add(new Converdo_Tracker_Query_EcommerceTracking, [
+                    0 => [Converdo_Support_QueryType::integer(), $finalOrder->getIncrementId()],
+                    1 => [Converdo_Support_QueryType::float(), $finalOrder->getBaseGrandTotal()],
+                    2 => [Converdo_Support_QueryType::float(), number_format($finalOrder->getGrandTotal() - $finalOrder->getShippingAmount() - $finalOrder->getShippingTaxAmount(), 2)],
+                    3 => [Converdo_Support_QueryType::float(), $finalOrder->getBaseTaxAmount()],
+                    4 => [Converdo_Support_QueryType::float(), $finalOrder->getBaseShippingAmount()],
+                ]);
+            }
         }
     }
 }

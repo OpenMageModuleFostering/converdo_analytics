@@ -41,8 +41,6 @@ class Converdo_Analytics_PingController extends Mage_Core_Controller_Front_Actio
     {
         header('Content-Type: application/json;charset=utf-8');
 
-        echo '<pre>';
-
         echo json_encode($this->output, true);
     }
 }

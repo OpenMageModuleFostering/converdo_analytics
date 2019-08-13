@@ -1,26 +1,32 @@
 <?php
 
+/**
+ * Class Converdo_Tracker_Query_SiteId
+ *
+ * @package     Converdo
+ * @author      Marc Roosendaal <marc@converdo.nl>
+ * @copyright   2016 Converdo B.V.
+ * @link        https://developer.piwik.org/api-reference/tracking-javascript
+ */
 class Converdo_Tracker_Query_SiteId extends Converdo_Tracker_Query_AbstractQuery
 {
     /**
-     * Get the view.
-     *
-     * @return mixed
+     * @inheritdoc
+     * @return string
      */
-    public function getView()
+    public function view()
     {
         return 'setSiteId';
     }
 
     /**
-     * Get the data.
-     *
+     * @inheritdoc
      * @return array
      */
-    public function getData()
+    public function parameters()
     {
         return [
-            0   => Mage::helper('analytics')->getSiteId(),
+            0   => [Converdo_Support_QueryType::string(), Converdo_Analytics_Helper_Data::getSiteId()],
         ];
     }
 }

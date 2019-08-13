@@ -1,20 +1,33 @@
 <?php
 
+/**
+ * Class Converdo_Tracker_Query_EcommerceCartUpdate
+ *
+ * @package     Converdo
+ * @author      Marc Roosendaal <marc@converdo.nl>
+ * @copyright   2016 Converdo B.V.
+ * @link        https://developer.piwik.org/api-reference/tracking-javascript
+ * @link        https://piwik.org/docs/ecommerce-analytics/
+ */
 class Converdo_Tracker_Query_EcommerceCartUpdate extends Converdo_Tracker_Query_AbstractQuery
 {
-    public function getView()
+    /**
+     * @inheritdoc
+     * @return string
+     */
+    public function view()
     {
         return 'trackEcommerceCartUpdate';
     }
 
-    public function getData()
+    /**
+     * @inheritdoc
+     * @return array
+     */
+    public function parameters()
     {
-        if (!($this->entity instanceof Varien_Object)) {
-            return [];
-        }
-
         return [
-            0 => number_format($this->entity->getQuote()->getGrandTotal(), 2),
+            0   => [Converdo_Support_QueryType::float(), number_format($this->entities[0]->getQuote()->getGrandTotal(), 2)],
         ];
     }
 }

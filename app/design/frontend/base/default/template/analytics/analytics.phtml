@@ -1,4 +1,6 @@
-        <!-- START CONVERDO TRACKING CODE -->
+        <?php if (Mage::helper('analytics')->isEnabled()) { ?>
+
+		<!-- START CONVERDO TRACKING CODE -->
         <script type="text/javascript">
             var _paq = _paq || [];
             (function(){
@@ -11,3 +13,4 @@
         <noscript><p><img src="<?= Mage::helper('analytics')->getPhpTracker(true) ?>?idsite=<?= Mage::helper('analytics')->getSiteId() ?>" style="border:0" alt="" /></p></noscript>
         <!-- END CONVERDO TRACKING CODE -->
 
+		<?php } ?>

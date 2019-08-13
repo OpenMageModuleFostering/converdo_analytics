@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * Class Converdo_Tracker_Query_EcommerceItem
+ *
+ * @package     Converdo
+ * @author      Marc Roosendaal <marc@converdo.nl>
+ * @copyright   2016 Converdo B.V.
+ * @link        https://developer.piwik.org/api-reference/tracking-javascript
+ * @link        https://piwik.org/docs/ecommerce-analytics/
+ */
 class Converdo_Tracker_Query_EcommerceItem extends Converdo_Tracker_Query_AbstractQuery
 {
     /**
@@ -8,30 +17,24 @@ class Converdo_Tracker_Query_EcommerceItem extends Converdo_Tracker_Query_Abstra
     protected $entity;
 
     /**
-     * Get the view.
-     *
-     * @return mixed
+     * @inheritdoc
+     * @return string
      */
-    public function getView()
+    public function view()
     {
         return 'addEcommerceItem';
     }
 
     /**
-     * Get the data.
-     *
+     * @inheritdoc
      * @return array
      */
-    public function getData()
+    public function parameters()
     {
-        if (!($this->entity instanceof Converdo_Entity_Interface_EntityInterface)) {
-            return [];
-        }
-
         return [
-            0 => $this->entity->getSku(),
-            1 => $this->entity->getName(),
-            3 => $this->entity->getPrice(),
+            0 => [Converdo_Support_QueryType::string(), $this->entities[0]->getSku()],
+            1 => [Converdo_Support_QueryType::string(), $this->entities[0]->getName()],
+            3 => [Converdo_Support_QueryType::float(), $this->entities[0]->getPrice()],
         ];
     }
 }

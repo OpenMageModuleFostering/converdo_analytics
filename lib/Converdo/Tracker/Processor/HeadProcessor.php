@@ -3,21 +3,12 @@
 class Converdo_Tracker_Processor_HeadProcessor extends Converdo_Tracker_Processor_AbstractProcessor
 {
     /**
-     * Converdo_Tracker_Processor_MetaProcessor constructor.
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
-     * Process everything.
-     *
+     * @inheritdoc
      * @return void
      */
     public function process()
     {
-        $this->writer->make(new Converdo_Tracker_Query_SiteId)->write();
-        $this->writer->make(new Converdo_Tracker_Query_TrackerUrl)->write();
+        Converdo_Support_QueryParser::add(new Converdo_Tracker_Query_SiteId);
+        Converdo_Support_QueryParser::add(new Converdo_Tracker_Query_TrackerUrl);
     }
 }

@@ -35,8 +35,6 @@ class Converdo_Analytics_Model_Observer
 
         $block = Mage::app()->getFrontController()->getAction()->getLayout()->getBlock('converdo_analytics');
 
-        Mage::log('BLOCK: ' . get_class($block));
-
         if ($block) {
             $block->setOrderedIds($orderIds);
         }

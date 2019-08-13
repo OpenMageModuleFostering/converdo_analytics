@@ -66,6 +66,13 @@ interface Converdo_Entity_Interface_ProductInterface
     public function isInStock();
 
     /**
+     * Get the product's brand.
+     *
+     * @return bool
+     */
+    public function getBrand();
+
+    /**
      * Get the product stock amount.
      *
      * @return int
@@ -120,4 +127,11 @@ interface Converdo_Entity_Interface_ProductInterface
      * @return array
      */
     public function getCategoryIds();
+
+    /**
+     * Get the attributes of the product.
+     *
+     * @return array
+     */
+    public function getAttributes();
 }

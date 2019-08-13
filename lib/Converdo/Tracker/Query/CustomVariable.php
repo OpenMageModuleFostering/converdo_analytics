@@ -1,27 +1,33 @@
 <?php
 
+/**
+ * Class Converdo_Tracker_Query_CustomVariable
+ *
+ * @package     Converdo
+ * @author      Marc Roosendaal <marc@converdo.nl>
+ * @copyright   2016 Converdo B.V.
+ * @link        https://developer.piwik.org/api-reference/tracking-javascript
+ */
 class Converdo_Tracker_Query_CustomVariable extends Converdo_Tracker_Query_AbstractQuery
 {
     /**
-     * Get the view.
-     *
-     * @return mixed
+     * @inheritdoc
+     * @return string
      */
-    public function getView()
+    public function view()
     {
         return 'setCustomVariable';
     }
 
     /**
-     * Get the data.
-     *
+     * @inheritdoc
      * @return array
      */
-    public function getData()
+    public function parameters()
     {
         return [
-            0   => 1,
-            1   => 'configuration',
+            0   => [Converdo_Support_QueryType::integer(), 1],
+            1   => [Converdo_Support_QueryType::string(), 'configuration'],
         ];
     }
 }

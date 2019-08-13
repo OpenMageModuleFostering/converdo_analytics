@@ -3,7 +3,7 @@
 <config>
     <modules>
         <Converdo_Analytics>
-            <version>1.2.3.5</version>
+            <version>1.2.4.6</version>
         </Converdo_Analytics>
     </modules>
     <global>
@@ -78,6 +78,13 @@
                 </Converdo_Analytics>
             </modules>
         </translate>
+        <layout>
+            <updates>
+                <namespace_module>
+                    <file>converdoanalytics.xml</file>
+                </namespace_module>
+            </updates>
+        </layout>
     </adminhtml>
     <admin>
         <routers>
@@ -90,4 +97,11 @@
             </Converdo_Analytics>
         </routers>
     </admin>
+    <default>
+        <converdo>
+            <advanced>
+                <checkoutpath>/checkout/onepage</checkoutpath>
+            </advanced>
+        </converdo>
+    </default>
 </config>

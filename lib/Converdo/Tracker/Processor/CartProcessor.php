@@ -8,17 +8,8 @@ class Converdo_Tracker_Processor_CartProcessor extends Converdo_Tracker_Processo
     protected $cart;
 
     /**
-     * Converdo_Tracker_Processor_CartProcessor constructor.
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
-     * Get whether the processor is responsible for the job.
-     *
-     * @param Converdo_Analytics_Block_Tracker $block
+     * @inheritdoc
+     * @param  Converdo_Analytics_Block_Tracker         $block
      * @return bool
      */
     public function responsible(Converdo_Analytics_Block_Tracker $block)
@@ -36,21 +27,23 @@ class Converdo_Tracker_Processor_CartProcessor extends Converdo_Tracker_Processo
     public function process()
     {
         foreach ($this->cart->getQuote()->getAllVisibleItems() as $key => $item) {
-            $product    = Mage::getModel('catalog/product')->load($item->product_id);
-            $product    = new Converdo_Entity_Product($product);
-            $category   = null;
+            $product = Mage::getModel('catalog/product')->load($item->product_id);
+            $product = new Converdo_Entity_Product($product);
+            $category = null;
 
             if (($categoryIds = $product->getCategoryIds()) && count($categoryIds)) {
                 $category = Mage::getModel('catalog/category')->load($categoryIds[0]);
                 $category = $category->getName();
             }
 
-            $this->writer->make(new Converdo_Tracker_Query_EcommerceItem)->with($product)->with([
-                2   => $category,
-                4   => $item->getQty(),
-            ])->write();
+            Converdo_Support_QueryParser::entity($product);
+            Converdo_Support_QueryParser::add(new Converdo_Tracker_Query_EcommerceItem, [
+                2 => [Converdo_Support_QueryType::string(), $category],
+                4 => [Converdo_Support_QueryType::float(), $item->getQty()],
+            ]);
         }
 
-        $this->writer->make(new Converdo_Tracker_Query_EcommerceCartUpdate)->with($this->cart)->write();
+        Converdo_Support_QueryParser::entity($this->cart);
+        Converdo_Support_QueryParser::add(new Converdo_Tracker_Query_EcommerceCartUpdate);
     }
 }

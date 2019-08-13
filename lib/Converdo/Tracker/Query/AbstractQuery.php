@@ -1,29 +1,37 @@
 <?php
 
+/**
+ * Class Converdo_Tracker_Query_AbstractQuery
+ *
+ * @package     Converdo
+ * @author      Marc Roosendaal <marc@converdo.nl>
+ * @copyright   2016 Converdo B.V.
+ * @link        https://developer.piwik.org/api-reference/tracking-javascript
+ * @link        https://piwik.org/docs/ecommerce-analytics/
+ */
 abstract class Converdo_Tracker_Query_AbstractQuery implements Converdo_Tracker_Query_Interface_QueryInterface
 {
     /**
-     * @var Varien_Object
+     * @var Varien_Object[]
      */
-    protected $entity;
+    protected $entities = [];
 
     /**
-     * Pass an entity to the query.
-     *
-     * @param Varien_Object $entity
-     * @return void
+     * @inheritdoc
+     * @return $this
      */
-    public function setEntity(Varien_Object $entity)
+    public function with(array $entities = [])
     {
-        $this->entity = $entity;
+        $this->entities = array_merge($this->entities, $entities);
+
+        return $this;
     }
 
     /**
-     * Get the data.
-     *
+     * @inheritdoc
      * @return array
      */
-    public function getData()
+    public function parameters()
     {
         return [];
     }

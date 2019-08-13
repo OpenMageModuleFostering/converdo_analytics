@@ -3,14 +3,6 @@
 class Converdo_Tracker_Processor_PageViewProcessor extends Converdo_Tracker_Processor_AbstractProcessor
 {
     /**
-     * Converdo_Tracker_Processor_ProductViewProcessor constructor.
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
      * Process everything.
      *
      * @return void

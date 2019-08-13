@@ -3,7 +3,7 @@
 class Converdo_Tracker_Processor_ProductViewProcessor extends Converdo_Tracker_Processor_AbstractProcessor
 {
     /**
-     * @var Mage_Catalog_Model_Product|Converdo_Entity_Product
+     * @var Converdo_Entity_Product
      */
     protected $product;
 
@@ -13,14 +13,6 @@ class Converdo_Tracker_Processor_ProductViewProcessor extends Converdo_Tracker_P
     protected $categories = [];
 
     /**
-     * Converdo_Tracker_Processor_ProductViewProcessor constructor.
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
      * Get whether the processor is responsible for the job.
      *
      * @param Converdo_Analytics_Block_Tracker $block
@@ -28,8 +20,7 @@ class Converdo_Tracker_Processor_ProductViewProcessor extends Converdo_Tracker_P
      */
     public function responsible(Converdo_Analytics_Block_Tracker $block)
     {
-        return ($this->product = Mage::registry('current_product')) &&
-               ($this->product instanceof Mage_Catalog_Model_Product);
+        return Mage::registry('current_product');
     }
 
     /**
@@ -39,11 +30,12 @@ class Converdo_Tracker_Processor_ProductViewProcessor extends Converdo_Tracker_P
      */
     public function process()
     {
-        $this->product = new Converdo_Entity_Product($this->product);
+        $this->product = new Converdo_Entity_Product(Mage::registry('current_product'));
 
-        $this->writer->make(new Converdo_Tracker_Query_ProductView)->with($this->product)->with([
-            2 => implode(', ', $this->categories()),
-        ])->write();
+        Converdo_Support_QueryParser::entity($this->product);
+        Converdo_Support_QueryParser::add(new Converdo_Tracker_Query_ProductView, [
+            2 => [Converdo_Support_QueryType::string(), implode(', ', $this->categories())],
+        ]);
 
         $this->configuration();
     }
@@ -96,14 +88,20 @@ class Converdo_Tracker_Processor_ProductViewProcessor extends Converdo_Tracker_P
             // Product Id
             'rid'       => $this->product->getId(),
 
+            // Product Children Id
+            'tid'       => $this->children(),
+
             // Product Type
             'typ'       => $this->product->getType(),
 
             // Product Attributes
-            'att'       => null,
+            'att'       => $this->product->getAttributes(),
 
             // Product Is In Stock
             'stb'       => $this->product->isInStock(),
+
+            // Product Is In Stock
+            'bra'       => $this->product->getBrand(),
 
             // Product Stock Quantity
             'sqn'       => $this->product->getStockQuantity(),
@@ -111,5 +109,16 @@ class Converdo_Tracker_Processor_ProductViewProcessor extends Converdo_Tracker_P
             'ova'       => null,
             'pco'       => null,
         ]);
+    }
+
+    protected function children()
+    {
+        $children = Mage::getModel('catalog/product_type_configurable')->getChildrenIds($this->product->getId());
+
+        if (! count($children) || ! isset($children[0])) {
+            return null;
+        }
+
+        return array_keys($children[0]);
     }
 }

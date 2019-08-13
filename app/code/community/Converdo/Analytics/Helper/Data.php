@@ -8,9 +8,9 @@ class Converdo_Analytics_Helper_Data extends Mage_Core_Helper_Abstract
      * @param null $store
      * @return bool
      */
-    public function isEnabled($store = null)
+    public static function isEnabled($store = null)
     {
-        return (bool) $this->hasSiteId($store)
+        return (bool) self::hasSiteId($store)
             && Mage::getStoreConfigFlag('converdo/analytics/active', $store)
             && Mage::getStoreConfigFlag('converdo/analytics/token', $store);
     }
@@ -21,7 +21,7 @@ class Converdo_Analytics_Helper_Data extends Mage_Core_Helper_Abstract
      * @param null $store
      * @return string
      */
-    public function getSiteId($store = null)
+    public static function getSiteId($store = null)
     {
         return Mage::getStoreConfig('converdo/analytics/site', $store);
     }
@@ -32,29 +32,29 @@ class Converdo_Analytics_Helper_Data extends Mage_Core_Helper_Abstract
      * @param null $store
      * @return bool
      */
-    public function hasSiteId($store = null)
+    public static function hasSiteId($store = null)
     {
-        return (bool) $this->getSiteId($store);
+        return (bool) self::getSiteId($store);
     }
 
-    public function getSiteUrl()
+    public static function getSiteUrl()
     {
-        return '//piwik.converdo.dev/';
+        return '//tracker.converdo.com/';
     }
 
-    public function getPhpTracker($full = false)
+    public static function getPhpTracker($full = false)
     {
         if ($full) {
-            return $this->getSiteUrl() . 'tracker.php';
+            return self::getSiteUrl() . 'tracker.php';
         }
 
         return 'tracker.php';
     }
 
-    public function getJsTracker($full = false)
+    public static function getJsTracker($full = false)
     {
         if ($full) {
-            return $this->getSiteUrl() . 'tracker.js';
+            return self::getSiteUrl() . 'tracker.js';
         }
 
         return 'tracker.js';

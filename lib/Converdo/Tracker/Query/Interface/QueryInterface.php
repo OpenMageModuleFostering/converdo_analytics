@@ -3,24 +3,24 @@
 interface Converdo_Tracker_Query_Interface_QueryInterface
 {
     /**
-     * Get the view.
+     * Returns the query key.
      *
      * @return mixed
      */
-    public function getView();
+    public function view();
 
     /**
-     * Get the data.
+     * Returns the query parameters.
      *
      * @return array
      */
-    public function getData();
+    public function parameters();
 
     /**
-     * Pass an entity to the query.
+     * Pass additional data to the query.
      *
-     * @param Varien_Object $entity
-     * @return void
+     * @param  array        $entities
+     * @return $this
      */
-    public function setEntity(Varien_Object $entity);
+    public function with(array $entities = []);
 }

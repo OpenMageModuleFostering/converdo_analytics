@@ -8,7 +8,7 @@ class Converdo_Entity_Product extends Converdo_Entity_AbstractEntity implements 
     /**
      * @var Mage_Catalog_Model_Product
      */
-    protected $entity;
+    public $entity;
 
     /**
      * Converdo_Entity_Product constructor.
@@ -190,5 +190,25 @@ class Converdo_Entity_Product extends Converdo_Entity_AbstractEntity implements 
     public function getCategoryIds()
     {
         return (array) $this->entity->getCategoryIds();
+    }
+
+    /**
+     * Get the product's brand.
+     *
+     * @return bool
+     */
+    public function getBrand()
+    {
+        return $this->entity->getAttributeText('manufacturer');
+    }
+
+    /**
+     * Get the attributes of the product.
+     *
+     * @return array
+     */
+    public function getAttributes()
+    {
+        return Mage::getModel('eav/entity_attribute_set')->load($this->entity->getAttributeSetId())->getAttributeSetName();
     }
 }

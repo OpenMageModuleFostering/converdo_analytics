@@ -3,14 +3,15 @@
 interface Converdo_Tracker_Processor_Interface_ProcessorInterface
 {
     /**
-     * Get whether the processor is responsible for the job.
+     * Gets whether the processor is responsible for the job.
      *
+     * @param  Converdo_Analytics_Block_Tracker     $block
      * @return bool
      */
-    public function responsible();
+    public function responsible(Converdo_Analytics_Block_Tracker $block);
 
     /**
-     * Process everything.
+     * Processes everything.
      *
      * @return void
      */
